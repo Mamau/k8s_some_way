@@ -1,0 +1,22 @@
+NFS (на control-plane)
+1. установка
+apt install -y nfs-kernel-server
+
+2. Создание директории
+mkdir -p /srv/nfs/share
+chmod 777 /srv/nfs/share
+3. Экспорт
+vim /etc/exports
+добавить:
+
+/srv/nfs/share *(rw,sync,no_subtree_check,no_root_squash)
+4. Применить
+exportfs -a
+systemctl restart nfs-kernel-server
+systemctl enable nfs-kernel-server
+
+5. На воркер нодах
+apt install -y nfs-common
+проверить (опционально)
+mkdir /mnt/test
+mount 37.27.44.115:/srv/nfs/share /mnt/test
