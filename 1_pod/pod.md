@@ -25,6 +25,9 @@ spec:
           memory: "128Mi"
           cpu: "500m"
 ```
+Какие значения можно использовать в манифесте, описано в документации по [Kubernetes API](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/)  
+  
+
 В манифесте пода надо обязательно указать контейнеры которые будут использоваться  
 - name - имя контейнера внутри пода  
 - image - имя образа
