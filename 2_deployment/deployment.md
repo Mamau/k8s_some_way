@@ -26,6 +26,22 @@ spec:
       app: *app
       version: *version
   template:
+    metadata:
+      name: my-first-pod
+      namespace: work
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:latest
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
 ```
 > & - это якорь в YAML. С его помощью можно пометить значение именем, а потом переиспользовать его ниже через *
 > Так не нужно дублировать одно и то же значение, и изменения вносятся только в одном месте.
