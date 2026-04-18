@@ -36,7 +36,7 @@ spec:
 
 Создать pod можно следующей командой
 ```shell
-kubectl apply -f pod/00-pod.yaml
+kubectl apply -f 1_pod/00-pod.yaml
 ```
 ***
 Состояния пода  
@@ -173,7 +173,7 @@ kubelet убивает контейнер, и в дальнейшем учиты
 При серьезных изменениях проще удалить существующий под и создать его заново. 
 ```shell
 kubectl -n work delete pod my-first-pod
-kubectl apply -f pod/01-finalPod.yaml
+kubectl apply -f 1_pod/01-finalPod.yaml
 ```
 Посмотрим логи
 ```shell
