@@ -1,23 +1,41 @@
 ---
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-first-nginx
+  namespace: work
+  labels:
+    app.kubernetes.io/name: nginx
+    app.kubernetes.io/version: 1.27.5
+spec:
+  selector:
+    app.kubernetes.io/name: nginx
+    app.kubernetes.io/version: 1.27.5
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+      name: http
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: my-first-deployment
   namespace: work
   labels:
-    app: &app nginx
-    version: &version 1.27.5
+    app.kubernetes.io/name: &app nginx
+    app.kubernetes.io/version: &version 1.27.5
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: *app
-      version: *version
+      app.kubernetes.io/name: *app
+      app.kubernetes.io/version: *version
   template:
     metadata:
       labels:
-        app: *app
-        version: *version
+        app.kubernetes.io/name: *app
+        app.kubernetes.io/version: *version
     spec:
       initContainers:
         - name: init-myservice
@@ -45,13 +63,3 @@ spec:
             limits:
               memory: "128Mi"
               cpu: "500m"
-          livenessProbe:
-            tcpSocket:
-              port: 80
-            initialDelaySeconds: 15
-            periodSeconds: 10
-          readinessProbe:
-            tcpSocket:
-              port: 80
-            initialDelaySeconds: 15
-            periodSeconds: 10

@@ -54,7 +54,7 @@ spec:
 kubectl apply -f 2_deployment/02-deployment.yaml
 ```
 Получим ответ
-```shell
+```text
 deployment.apps/my-first-deployment created
 ```
 Посмотрим что получилось
@@ -62,7 +62,7 @@ deployment.apps/my-first-deployment created
 kubectl -n work get all
 ```
 Используя специальный параметр all получим много много ресурсов:
-```shell
+```text
 NAME                                       READY   STATUS    RESTARTS   AGE
 pod/my-first-deployment-66cd4894c6-pnmmc   1/1     Running   0          57s
 pod/my-first-deployment-66cd4894c6-qklnj   1/1     Running   0          57s
@@ -96,7 +96,7 @@ Deployment понимает, каким ReplicaSet он управляет, пр
 ```shell
 kubectl -n work get replicaset.apps/my-first-deployment-66cd4894c6 --output=jsonpath={.spec.selector} | jq
 ```
-```shell
+```text
 {
   "matchLabels": {
     "app": "nginx",
@@ -110,7 +110,7 @@ Pod к ReplicaSet и от ReplicaSet к Deployment. Она осуществля�
 ```shell
 kubectl -n work get replicaset.apps/my-first-deployment-66cd4894c6 --output=jsonpath={.metadata.ownerReferences} | jq
 ```
-```shell
+```text
 [
   {
     "apiVersion": "apps/v1",
@@ -142,7 +142,7 @@ kubectl set image deployment/my-first-deployment nginx=nginx:1.27.5.
 ```shell
 kubectl apply -f 2_deployment/03-deployment.yaml
 ```
-```shell
+```text
 deployment.apps/my-first-deployment configured
 ```
 Можно посмотреть через watch (или вашу любимую программу k9s или lens)
@@ -157,7 +157,7 @@ kubectl -n work get all
 ```
 При изменении деплоймента будет создаваться новая реплика сет, при этом можно будет откатиться на предыдущую версию реплики сет если надо  
 по умолчанию максимальное кол-во реплика сет = 10, если создаете новую - то самая старая будет уже удалятся.
-```shell
+```text
 NAME                                             DESIRED   CURRENT   READY   AGE
 replicaset.apps/my-first-deployment-55746f6b68   0         0         0       5m8s
 replicaset.apps/my-first-deployment-66cd4894c6   0         0         0       3h13m
@@ -173,7 +173,7 @@ replicaset.apps/my-first-deployment-74d67456ff   4         4         4       24m
 ```shell
 kubectl -n work rollout restart deployment my-first-deployment
 ```
-```shell
+```text
 deployment.apps/my-first-deployment restarted
 ```
 ### Strategy
