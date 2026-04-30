@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+#immutable: true
+data:
+  file1.txt: |
+    Текстовый файл 1
+    и его
+    содержимое
+  file2.txt: |
+    Текстовый файл 2
+    и его
+    содержимое

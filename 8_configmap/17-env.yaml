@@ -1,0 +1,40 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test
+  namespace: work
+  labels:
+    app: &app test
+    version: &version v1.27.5
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: *app
+      version: *version
+  template:
+    metadata:
+      labels:
+        app: *app
+        version: *version
+    spec:
+      containers:
+        - name: main
+          image: busybox:1.28
+          command:
+            - 'sh'
+            - '-c'
+            - 'tail -f /dev/null'
+          resources:
+            requests:
+              memory: 100Mi
+              cpu: 100m
+            limits:
+              memory: 100Mi
+              cpu: 100m
+          env:
+            - name: TEST_ENV1
+              value: "test1"
+            - name: TEST_ENV2
+              value: "test2"
