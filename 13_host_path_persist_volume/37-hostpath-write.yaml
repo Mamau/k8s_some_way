@@ -1,0 +1,41 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: hostpath-write-demo
+spec:
+  volumes:
+    - name: host-data
+      hostPath:
+        # Путь на хост-машине
+        path: /tmp/k8s-book-data
+        # Kubernetes создаст директорию, если ее нет
+        type: DirectoryOrCreate
+  restartPolicy: Never
+  containers:
+    - name: main
+      image: busybox:1.37
+      command:
+        - "sh"
+        - "-c"
+      args:
+        - |
+          echo "Hello from pod $(POD_NAME)!" > /data/hello.txt
+          echo "Data written to /data/hello.txt"
+          echo "---"
+          sleep infinity
+      env:
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+      volumeMounts:
+        - name: host-data
+          mountPath: /data
+      resources:
+        requests:
+          memory: "64Mi"
+          cpu: "250m"
+        limits:
+          memory: "128Mi"
+          cpu: "500m"
