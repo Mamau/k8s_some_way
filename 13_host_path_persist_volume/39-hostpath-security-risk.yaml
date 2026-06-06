@@ -1,0 +1,29 @@
+# ВНИМАНИЕ: этот манифест демонстрирует КРАЙНЕ небезопасную конфигурацию
+# НЕ ИСПОЛЬЗУЙТЕ его в проде
+apiVersion: v1
+kind: Pod
+metadata:
+  name: hostpath-security-risk
+spec:
+  containers:
+    - name: main
+      image: busybox:1.37
+      command: ["/bin/sh", "-c", "sleep 1h"]
+      securityContext:
+        # Запускаем контейнер от имени root
+        runAsUser: 0
+      volumeMounts:
+        - name: host-proc
+          mountPath: /host-proc
+      resources:
+        requests:
+          memory: "64Mi"
+          cpu: "250m"
+        limits:
+          memory: "128Mi"
+          cpu: "500m"
+  volumes:
+    - name: host-proc
+      hostPath:
+        path: /proc
+        type: Directory
